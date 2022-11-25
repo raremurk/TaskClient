@@ -16,7 +16,19 @@ namespace Client
 {
     public class ChartView
     {
-        private static ObservableCollection<DateTimePoint> values = new();
+        private static ObservableCollection<DateTimePoint> values = new()
+        {
+            new DateTimePoint(new DateTime(2020, 1, 1), 2.5),
+            new DateTimePoint(new DateTime(2020, 1, 2), 2.6),
+            new DateTimePoint(new DateTime(2020, 1, 3), 2.7),
+            new DateTimePoint(new DateTime(2020, 1, 4), 2.4),
+            new DateTimePoint(new DateTime(2020, 1, 5), 2.5),
+            new DateTimePoint(new DateTime(2020, 1, 6), 2.5),
+            new DateTimePoint(new DateTime(2020, 1, 7), 2.6),
+            new DateTimePoint(new DateTime(2020, 1, 8), 2.7),
+            new DateTimePoint(new DateTime(2020, 1, 9), 2.4),
+            new DateTimePoint(new DateTime(2020, 1, 10), 2.5)
+        };
         private static double minValue = double.MaxValue;
         private static double maxValue = 0;
 
@@ -24,27 +36,35 @@ namespace Client
         {
             new ColumnSeries<DateTimePoint>
             {
-                TooltipLabelFormatter = (chartPoint) =>
+                TooltipLabelFormatter = (chartPoint) => 
                     $"{new DateTime((long) chartPoint.SecondaryValue):dd MMMM yyyy}: {chartPoint.PrimaryValue}",
                 Values = values
             }
-            .WithConditionalPaint(new SolidColorPaint(SKColors.Green.WithAlpha(120)))
+            .WithConditionalPaint(new SolidColorPaint(SKColors.YellowGreen))
             .When(point => point.Model?.Value == minValue)
-            .WithConditionalPaint(new SolidColorPaint(SKColors.Red.WithAlpha(120)))
+            .WithConditionalPaint(new SolidColorPaint(SKColors.Red))
             .When(point => point.Model?.Value == maxValue)
         };
 
-        public Axis[] XAxes { get; set; } =
-        {
+        public static Axis[] XAxes { get; set; } =
+{
             new Axis
             {
-                Labeler = value => new DateTime((long) value).ToString("dd.MM.yyyy"),
-                LabelsRotation = 15,
+                Name = "Валюта",
+                Labeler = value => new DateTime((long) value).ToString("d MMM yyyy"),
+                LabelsRotation = 10,
                 UnitWidth = TimeSpan.FromDays(1).Ticks,
                 MinStep = TimeSpan.FromDays(1).Ticks
             }
         };
 
+        public static Axis[] YAxes { get; set; } = 
+        { 
+            new Axis
+            {
+                Name = "Курс"
+            }
+        };
 
         public static async void GetData(int id, string start, string end)
         {
@@ -65,17 +85,19 @@ namespace Client
                     values.Clear();
                     minValue = double.MaxValue;
                     maxValue = 0;
+                    YAxes[0].Name = $"{data[0].ValueCurrency}";
+                    XAxes[0].Name = $"{data[0].Amount} {data[0].Currency}";
                     foreach (var rate in data)
                     {
-                        values.Add(new DateTimePoint(rate.Date, rate.Price));
-                        if (rate.Price < minValue)
+                        values.Add(new DateTimePoint(rate.Date, rate.Value));
+                        if (rate.Value < minValue)
                         {
-                            minValue = rate.Price;
+                            minValue = rate.Value;
                         }
 
-                        if (rate.Price > maxValue)
+                        if (rate.Value > maxValue)
                         {
-                            maxValue = rate.Price;
+                            maxValue = rate.Value;
                         }
                     }
                 }

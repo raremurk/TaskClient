@@ -4,9 +4,10 @@ namespace Client
 {
     public class Rate
     {
-        public int CurrencyId { get; set; }
-        public string PriceCurrency { get; set; }
-        public double Price { get; set; }
+        public string Currency { get; set; }
         public DateTime Date { get; set; }
+        public double Value { get; set; }
+        public string ValueCurrency { get; set; }
+        public int Amount { get; set; }
     }
 }
