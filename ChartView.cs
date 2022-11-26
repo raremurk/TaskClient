@@ -32,11 +32,15 @@ namespace Client
         private static double minValue = double.MaxValue;
         private static double maxValue = 0;
 
+        public DateTime Start { get; set; } = new DateTime(DateTime.Today.AddYears(-5).Year, 1, 1);
+
+        public DateTime End { get; set; } = DateTime.Today.AddDays(-1);
+
         public ISeries[] Series { get; set; } =
         {
             new ColumnSeries<DateTimePoint>
             {
-                TooltipLabelFormatter = (chartPoint) => 
+                TooltipLabelFormatter = (chartPoint) =>
                     $"{new DateTime((long) chartPoint.SecondaryValue):dd MMMM yyyy}: {chartPoint.PrimaryValue}",
                 Values = values
             }
@@ -58,8 +62,8 @@ namespace Client
             }
         };
 
-        public static Axis[] YAxes { get; set; } = 
-        { 
+        public static Axis[] YAxes { get; set; } =
+        {
             new Axis
             {
                 Name = "Курс"

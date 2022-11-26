@@ -23,9 +23,19 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DatePicker Name="StartPicker" SelectedDate="2017.01.01" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" />
+        <DatePicker Name="StartPicker" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5"
+            DisplayDateStart="{Binding Start}"
+            DisplayDateEnd="{Binding End}"
+            SelectedDate="{Binding Start}"
+            DateValidationError="DatePicker_DateValidationError">
+        </DatePicker>
         <TextBlock Text="-" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <DatePicker Name="EndPicker" SelectedDate="2022.11.22" Grid.Column="2" Grid.Row="0" Margin="5,5,5,5" />
+        <DatePicker Name="EndPicker" Grid.Column="2" Grid.Row="0" Margin="5,5,5,5"
+            DisplayDateStart="{Binding Start}"
+            DisplayDateEnd="{Binding End}"
+            SelectedDate="{Binding End}"
+            DateValidationError="DatePicker_DateValidationError">
+        </DatePicker>
         <TextBlock Text="Валюта:" Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <ComboBox Name="Сurrency" Grid.Column="4" Grid.Row="0" Margin="5,5,5,5">
             <ComboBoxItem IsSelected="True">USD</ComboBoxItem>
