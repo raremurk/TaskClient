@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Properties;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -38,6 +39,12 @@ namespace Client
             {
                 MessageBox.Show(String.Format($"The date, {e.Text}, isn't correct."));
             }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            Settings.Default.Save();
+            base.OnClosed(e);   
         }
     }
 }

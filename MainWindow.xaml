@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
+        xmlns:p="clr-namespace:Client.Properties"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         mc:Ignorable="d"
-        Title="Анализ курсов" Height="450" Width="800">
+        Title="Анализ курсов"
+        Height="{Binding Source={x:Static p:Settings.Default}, Path=Height, Mode=TwoWay}"
+        Width="{Binding Source={x:Static p:Settings.Default}, Path=Width, Mode=TwoWay}"
+        Left="{Binding Source={x:Static p:Settings.Default}, Path=Left, Mode=TwoWay}"
+        Top="{Binding Source={x:Static p:Settings.Default}, Path=Top, Mode=TwoWay}"
+        WindowState="{Binding Source={x:Static p:Settings.Default}, Path=WindowState, Mode=TwoWay}">
     <Window.DataContext>
         <local:ChartView />
     </Window.DataContext>
@@ -26,19 +32,19 @@
         <DatePicker Name="StartPicker" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5"
             DisplayDateStart="{Binding Start}"
             DisplayDateEnd="{Binding End}"
-            SelectedDate="{Binding Start}"
+            SelectedDate="{Binding Source={x:Static p:Settings.Default}, Path=Start, Mode=TwoWay}"
             DateValidationError="DatePicker_DateValidationError">
         </DatePicker>
         <TextBlock Text="-" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <DatePicker Name="EndPicker" Grid.Column="2" Grid.Row="0" Margin="5,5,5,5"
             DisplayDateStart="{Binding Start}"
             DisplayDateEnd="{Binding End}"
-            SelectedDate="{Binding End}"
+            SelectedDate="{Binding Source={x:Static p:Settings.Default}, Path=End, Mode=TwoWay}"
             DateValidationError="DatePicker_DateValidationError">
         </DatePicker>
         <TextBlock Text="Валюта:" Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <ComboBox Name="Сurrency" Grid.Column="4" Grid.Row="0" Margin="5,5,5,5">
-            <ComboBoxItem IsSelected="True">USD</ComboBoxItem>
+        <ComboBox Name="Сurrency" Grid.Column="4" Grid.Row="0" Margin="5,5,5,5" SelectedIndex="{Binding Source={x:Static p:Settings.Default}, Path=Currency, Mode=TwoWay}">
+            <ComboBoxItem>USD</ComboBoxItem>
             <ComboBoxItem>EUR</ComboBoxItem>
             <ComboBoxItem>RUB</ComboBoxItem>
             <ComboBoxItem>BTC</ComboBoxItem>
