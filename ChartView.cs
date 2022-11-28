@@ -7,7 +7,6 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Windows;
@@ -78,7 +77,7 @@ namespace Client
             {
                 using var response = await httpClient.GetAsync($"https://localhost:7165/api/GetData?id={id}&start={start}&end={end}");
 
-                if (response.StatusCode == HttpStatusCode.BadRequest || response.StatusCode == HttpStatusCode.NotFound)
+                if (!response.IsSuccessStatusCode)
                 {
                     MessageBox.Show(response.StatusCode.ToString());
                 }

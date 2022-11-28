@@ -18,8 +18,8 @@ namespace Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string start = $"{StartPicker.SelectedDate:yyyy-MM-dd}";
-            string end = $"{EndPicker.SelectedDate:yyyy-MM-dd}";
+            var start = $"{StartPicker.SelectedDate:yyyy-MM-dd}";
+            var end = $"{EndPicker.SelectedDate:yyyy-MM-dd}";
             var index = Сurrency.SelectedIndex + 1;
             ChartView.GetData(index, start, end);
         }
@@ -32,19 +32,19 @@ namespace Client
             {
                 if (datePickerObj.BlackoutDates.Contains(newDate))
                 {
-                    MessageBox.Show(String.Format($"The date, {e.Text}, cannot be selected."));
+                    MessageBox.Show($"The date, {e.Text}, cannot be selected.");
                 }
             }
             else
             {
-                MessageBox.Show(String.Format($"The date, {e.Text}, isn't correct."));
+                MessageBox.Show($"The date, {e.Text}, isn't correct.");
             }
         }
 
         protected override void OnClosed(EventArgs e)
         {
             Settings.Default.Save();
-            base.OnClosed(e);   
+            base.OnClosed(e);
         }
     }
 }
